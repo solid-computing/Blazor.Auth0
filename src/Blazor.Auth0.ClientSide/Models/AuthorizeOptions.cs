@@ -103,6 +103,8 @@ namespace Blazor.Auth0.Models
         /// </summary>
         public int KeyLength { get; set; }
 
+        public string LoginHint { get; set; }
+
         /// <inheritdoc/>
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

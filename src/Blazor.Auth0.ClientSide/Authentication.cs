@@ -75,6 +75,11 @@ namespace Blazor.Auth0
                 query = query.Add("response_mode", responseMode);
             }
 
+            if (!string.IsNullOrEmpty(buildAuthorizedUrlOptions.LoginHint))
+            {
+                query = query.Add("login_hint", buildAuthorizedUrlOptions.LoginHint);
+            }
+
             query = query.Add("redirect_uri", buildAuthorizedUrlOptions.RedirectUri);
 
             UriBuilder uriBuilder = new UriBuilder

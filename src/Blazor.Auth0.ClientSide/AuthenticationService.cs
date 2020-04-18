@@ -2,6 +2,8 @@
 // Copyright (c) 2019 Henry Alberto Rodriguez Rodriguez
 // </copyright>
 
+using Blazor.Auth0.Shared;
+
 namespace Blazor.Auth0
 {
     using System;
@@ -65,6 +67,7 @@ namespace Blazor.Auth0
 
         /// <inheritdoc/>
         public SessionInfo SessionInfo { get; private set; }
+        private ILoginHintProvider loginHintProvider;
 
         private bool RequiresNonce => this.clientOptions.ResponseType == ResponseTypes.IdToken || this.clientOptions.ResponseType == ResponseTypes.TokenAndIdToken;
 
@@ -78,14 +81,14 @@ namespace Blazor.Auth0
         /// <param name="navigationManager">A <see cref="NavigationManager"/> param.</param>
         /// <param name="options">A <see cref="ClientOptions"/> param.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "I like this best ;)")]
-        public AuthenticationService(ILogger<AuthenticationService> logger, HttpClient httpClient, IJSRuntime jsRuntime, NavigationManager navigationManager, ClientOptions options)
+        public AuthenticationService(ILogger<AuthenticationService> logger, HttpClient httpClient, IJSRuntime jsRuntime, NavigationManager navigationManager, ClientOptions options, ILoginHintProvider? loginHintProvider = null)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             this.jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
             this.navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             this.clientOptions = options ?? throw new ArgumentNullException(nameof(options));
-
+            this.loginHintProvider = loginHintProvider ?? new NullLoginHintProvider();
             this.dotnetObjectRef = DotNetObjectReference.Create(this);
 
             Task.Run(async () =>
@@ -506,6 +509,7 @@ namespace Blazor.Auth0
                 State = CommonAuthentication.GenerateNonce(this.clientOptions.KeyLength),
                 Namespace = this.clientOptions.Namespace,
                 KeyLength = this.clientOptions.KeyLength,
+                LoginHint = this.loginHintProvider.Get(),
             };
         }
 
