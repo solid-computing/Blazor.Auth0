@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>8.0</LangVersion>
-    <Version>2.0.0-Preview5</Version>
+    <Version>2.0.0-Preview6</Version>
     <Authors>Henry Alberto Rodriguez Rodriguez</Authors>
     <Description>Auth0 library for Balzor</Description>
     <PackageProjectUrl>https://github.com/henalbrod/Blazor.Auth0</PackageProjectUrl>
@@ -15,17 +15,16 @@
     <Copyright>Henry Alberto Rodriguez Rodriguez</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIconUrl>https://raw.githubusercontent.com/henalbrod/Blazor.Auth0/master/src/Blazor.Auth0.ClientSide/icon.png</PackageIconUrl>
-    <PackageId>Blazor-Auth0-ClientSide</PackageId>
-    <PackageReleaseNotes>
-      Upgraded to .Net Core v3.2.0-preview1
-      Fixed issue #41
-    </PackageReleaseNotes>
+    <PackageId>Blazor-Auth0-ClientSide-SolidComputing</PackageId>
+    <PackageReleaseNotes>Added HintUrl support for client side
+</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>..\..\packages</PackageOutputPath>
   </PropertyGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="Blazor-Auth0-Shared-SolidComputing" Version="2.0.0-Preview6" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.2" />
@@ -54,12 +53,12 @@
         <ProjectReference Include="..\Blazor.Auth0.Shared\Blazor.Auth0.Shared.csproj" />
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Blazor-Auth0-Shared" Version="2.0.0-Preview5" />
-      </ItemGroup>
-    </Otherwise>
+    <Otherwise />
   </Choose>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor.Auth0.Shared\Blazor.Auth0.Shared.csproj" />
+  </ItemGroup>
     
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
